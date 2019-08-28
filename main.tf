@@ -19,26 +19,26 @@ variable "vpc_single_nat_gateway" {}
 //--------------------------------------------------------------------
 // Modules
 
-module "rds" {
-  source  = "terraform-aws-modules/rds/aws"
-  version = "2.5.0"
+# module "rds" {
+#   source  = "terraform-aws-modules/rds/aws"
+#   version = "2.5.0"
 
-  allocated_storage = 5
-  backup_window = var.rds_backup_window
-  engine = var.rds_engine
-  engine_version = var.rds_engine_version
-  family = var.rds_family
-  iam_database_authentication_enabled = var.rds_iam_database_authentication_enabled
-  identifier = "demodb"
-  instance_class = var.rds_instance_class
-  maintenance_window = var.rds_maintenance_window
-  major_engine_version = var.rds_major_engine_version
-  name = "demodb"
-  password = "foobarpw123"
-  port = var.rds_port
-  subnet_ids = [${module.vpc.database_subnets}]
-  username = "user"
-}
+#   allocated_storage = 5
+#   backup_window = var.rds_backup_window
+#   engine = var.rds_engine
+#   engine_version = var.rds_engine_version
+#   family = var.rds_family
+#   iam_database_authentication_enabled = var.rds_iam_database_authentication_enabled
+#   identifier = "demodb"
+#   instance_class = var.rds_instance_class
+#   maintenance_window = var.rds_maintenance_window
+#   major_engine_version = var.rds_major_engine_version
+#   name = "demodb"
+#   password = "foobarpw123"
+#   port = var.rds_port
+#   subnet_ids = [${module.vpc.database_subnets}]
+#   username = "user"
+# }
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
