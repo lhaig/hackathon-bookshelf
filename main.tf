@@ -41,6 +41,10 @@ module "rds" {
   port = var.rds_port
   subnet_ids = module.vpc.database_subnets
   username = "user"
+  tags  = {
+      owner = var.owner
+      env   = var.environment_tag
+  }
 }
 
 module "vpc" {
@@ -57,6 +61,6 @@ module "vpc" {
   single_nat_gateway = var.vpc_single_nat_gateway
   tags  = {
       owner = var.owner
-      env = var.environment_tag
+      env   = var.environment_tag
   }
 }
