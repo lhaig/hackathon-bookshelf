@@ -95,3 +95,7 @@ output "security_group" {
 output "service_endpoint" {
   value = module.rds.this_db_instance_endpoint
 }
+
+output "private_subnet_ids" {
+  value = module.vpc.private_subnets
+}
