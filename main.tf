@@ -60,6 +60,7 @@ module "vpc" {
   azs = ["eu-central-1a", "eu-central-1b"]
   cidr = "10.0.0.0/16"
   database_subnets = ["10.0.21.0/24", "10.0.22.0/24"]
+  private_subnets = ["10.0.0.0/24", "10.0.32.0/24"]
   enable_nat_gateway = var.vpc_enable_nat_gateway
   name = var.vpc_name
   one_nat_gateway_per_az = var.vpc_one_nat_gateway_per_az
@@ -113,7 +114,7 @@ module "security_group" {
 #   name          = "${var.vpc_name}-web"
 #   ami           = data.aws_ami.amazon_linux.id
 #   instance_type = "c5.large"
-#   subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
+#   subnet_id     = tolist(module.vpc.private_subnets.ids)[0]
 #   vpc_security_group_ids      = module.security_group.this_security_group_id
 #   associate_public_ip_address = true
 
@@ -122,3 +123,11 @@ module "security_group" {
 #       env   = var.environment_tag
 #   }
 # }
+
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
+
+output "security_group" {
+  value = module.security_group.this_security_group_id
+}
