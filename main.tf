@@ -5,6 +5,7 @@ provider "aws" {
 // Variables
 variable "name" {}
 variable "owner" {}
+variable "app_ami_id" {}
 variable "environment_tag" {}
 variable "rds_database_name" {}
 variable "rds_database_password" {}
