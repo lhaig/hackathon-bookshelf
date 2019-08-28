@@ -5,7 +5,6 @@ provider "aws" {
 // Variables
 variable "name" {}
 variable "owner" {}
-variable "app_ami_id" {}
 variable "environment_tag" {}
 variable "rds_database_name" {}
 variable "rds_database_password" {}
@@ -72,24 +71,6 @@ module "vpc" {
   }
 }
 
-# data "aws_ami" "amazon_linux" {
-#   most_recent = true
-#   owners = ["amazon"]
-#   filter {
-#     name = "name"
-#     values = [
-#       "amzn-ami-hvm-*-x86_64-gp2",
-#     ]
-#   }
-
-#   filter {
-#     name = "owner-alias"
-#     values = [
-#       "amazon",
-#     ]
-#   }
-# }
-
 module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3.0"
@@ -103,31 +84,14 @@ module "security_group" {
   egress_rules        = ["all-all"]
 }
 
-# resource "aws_eip" "this" {
-#   vpc      = true
-#   instance = module.ec2_instance.id[0]
-# }
-
-# module "ec2_instance" {
-#   source  = "terraform-aws-modules/ec2-instance/aws"
-#   version = "2.8.0"
-#   name          = "${var.vpc_name}-web"
-#   ami           = data.aws_ami.amazon_linux.id
-#   instance_type = "c5.large"
-#   subnet_id     = tolist(module.vpc.private_subnets.ids)[0]
-#   vpc_security_group_ids      = module.security_group.this_security_group_id
-#   associate_public_ip_address = true
-
-#   tags  = {
-#       owner = var.owner
-#       env   = var.environment_tag
-#   }
-# }
-
 output "vpc_id" {
   value = module.vpc.vpc_id
 }
 
 output "security_group" {
   value = module.security_group.this_security_group_id
+}
+
+output "service_endpoint" {
+  value = module.rds.this_db_instance_endpoint
 }
