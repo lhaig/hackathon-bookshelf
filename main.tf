@@ -36,7 +36,7 @@ module "rds" {
   name = "demodb"
   password = "foobarpw123"
   port = var.rds_port
-  subnet_ids = ["module.vpc.database_subnets"]
+  subnet_ids = [module.vpc.database_subnets]
   username = "user"
 }
 
