@@ -3,6 +3,9 @@ provider "aws" {
 
 //--------------------------------------------------------------------
 // Variables
+variable "name" {}
+variable "owner" {}
+variable "environment_tag" {}
 variable "rds_backup_window" {}
 variable "rds_engine" {}
 variable "rds_engine_version" {}
@@ -36,7 +39,7 @@ module "rds" {
   name = "demodb"
   password = "foobarpw123"
   port = var.rds_port
-  subnet_ids = [module.vpc.database_subnets]
+  subnet_ids = [module.vpc.database_subnets.ids]
   username = "user"
 }
 
@@ -52,4 +55,8 @@ module "vpc" {
   one_nat_gateway_per_az = var.vpc_one_nat_gateway_per_az
   public_subnets = ["10.0.101.0/24", "10.0.102.0/24"]
   single_nat_gateway = var.vpc_single_nat_gateway
+  tags  = {
+      owner = var.owner
+      env = var.environment_tag
+  }
 }
