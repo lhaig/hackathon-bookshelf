@@ -75,22 +75,40 @@ module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3.0"
 
-  name        = "${var.vpc_name}-sg"
-  description = "Security group for web EC2 instance"
+  name        = "${var.vpc_name}-rds-sg"
+  description = "Security group for RDS EC2 instance"
   vpc_id      = module.vpc.vpc_id
-
-  ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_rules       = ["http-80-tcp", "all-icmp"]
-  egress_rules        = ["all-all"]
+  
+  ingress_cidr_blocks  = ["10.0.0.0/24", "10.0.32.0/24"]
+  ingress {
+    from_port = 3306
+    to_port = 3306
+    protocol = "tcp"
+   }
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    self = true
+  }
+  tags {
+    Name = "allow-mariadb"
+  }
 }
+
+resource "aws_security_group" "allow-mariadb" {
+vpc_id = "${aws_vpc.main.id}"
+name = "allow-mariadb"
+description = "allow-mariadb"
 
 output "vpc_id" {
   value = module.vpc.vpc_id
 }
 
-output "security_group" {
-  value = module.security_group.this_security_group_id
-}
+# output "security_group" {
+#   value = module.security_group.this_security_group_id
+# }
 
 output "service_endpoint" {
   value = module.rds.this_db_instance_endpoint
@@ -98,4 +116,12 @@ output "service_endpoint" {
 
 output "private_subnet_ids" {
   value = module.vpc.private_subnets
+}
+
+output "database_subnet_ids" {
+  value = module.vpc.database_subnets
+}
+
+output "public_subnet_ids" {
+  value = module.vpc.public_subnets
 }
