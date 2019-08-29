@@ -97,15 +97,6 @@ module "security_group" {
   }
 }
 
-resource "aws_security_group" "allow-mariadb" {
-vpc_id = "${aws_vpc.main.id}"
-name = "allow-mariadb"
-description = "allow-mariadb"
-
-output "vpc_id" {
-  value = module.vpc.vpc_id
-}
-
 # output "security_group" {
 #   value = module.security_group.this_security_group_id
 # }
