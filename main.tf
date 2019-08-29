@@ -27,30 +27,30 @@ variable "vpc_single_nat_gateway" {}
 //--------------------------------------------------------------------
 // Modules
 
-module "rds" {
-  source  = "terraform-aws-modules/rds/aws"
-  version = "2.5.0"
+# module "rds" {
+#   source  = "terraform-aws-modules/rds/aws"
+#   version = "2.5.0"
 
-  allocated_storage = 5
-  backup_window = var.rds_backup_window
-  engine = var.rds_engine
-  engine_version = var.rds_engine_version
-  family = var.rds_family
-  iam_database_authentication_enabled = var.rds_iam_database_authentication_enabled
-  identifier = var.rds_identifier
-  instance_class = var.rds_instance_class
-  maintenance_window = var.rds_maintenance_window
-  major_engine_version = var.rds_major_engine_version
-  name = var.rds_database_name
-  password = var.rds_database_password
-  port = var.rds_port
-  subnet_ids = module.vpc.database_subnets
-  username = var.rds_database_name
-  tags  = {
-      owner = var.owner
-      env   = var.environment_tag
-  }
-}
+#   allocated_storage = 5
+#   backup_window = var.rds_backup_window
+#   engine = var.rds_engine
+#   engine_version = var.rds_engine_version
+#   family = var.rds_family
+#   iam_database_authentication_enabled = var.rds_iam_database_authentication_enabled
+#   identifier = var.rds_identifier
+#   instance_class = var.rds_instance_class
+#   maintenance_window = var.rds_maintenance_window
+#   major_engine_version = var.rds_major_engine_version
+#   name = var.rds_database_name
+#   password = var.rds_database_password
+#   port = var.rds_port
+#   subnet_ids = module.vpc.database_subnets
+#   username = var.rds_database_name
+#   tags  = {
+#       owner = var.owner
+#       env   = var.environment_tag
+#   }
+# }
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
