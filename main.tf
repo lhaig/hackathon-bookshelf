@@ -6,19 +6,6 @@ provider "aws" {
 variable "name" {}
 variable "owner" {}
 variable "environment_tag" {}
-variable "rds_database_name" {}
-variable "rds_database_password" {}
-variable "rds_database_user" {}
-variable "rds_identifier" {}
-variable "rds_backup_window" {}
-variable "rds_engine" {}
-variable "rds_engine_version" {}
-variable "rds_family" {}
-variable "rds_iam_database_authentication_enabled" {}
-variable "rds_instance_class" {}
-variable "rds_maintenance_window" {}
-variable "rds_major_engine_version" {}
-variable "rds_port" {}
 variable "vpc_name" {}
 variable "vpc_enable_nat_gateway" {}
 variable "vpc_one_nat_gateway_per_az" {}
@@ -26,31 +13,6 @@ variable "vpc_single_nat_gateway" {}
 
 //--------------------------------------------------------------------
 // Modules
-
-module "rds" {
-  source  = "terraform-aws-modules/rds/aws"
-  version = "2.5.0"
-
-  allocated_storage = 5
-  backup_window = var.rds_backup_window
-  engine = var.rds_engine
-  engine_version = var.rds_engine_version
-  family = var.rds_family
-  iam_database_authentication_enabled = var.rds_iam_database_authentication_enabled
-  identifier = var.rds_identifier
-  instance_class = var.rds_instance_class
-  maintenance_window = var.rds_maintenance_window
-  major_engine_version = var.rds_major_engine_version
-  name = var.rds_database_name
-  password = var.rds_database_password
-  port = var.rds_port
-  subnet_ids = module.vpc.database_subnets
-  username = var.rds_database_name
-  tags  = {
-      owner = var.owner
-      env   = var.environment_tag
-  }
-}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
@@ -94,10 +56,6 @@ module "security_group" {
 
 output "security_group" {
   value = module.security_group.this_security_group_id
-}
-
-output "service_endpoint" {
-  value = module.rds.this_db_instance_endpoint
 }
 
 output "private_subnet_ids" {
