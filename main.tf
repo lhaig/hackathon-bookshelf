@@ -38,7 +38,7 @@ module "security_group" {
   version = "~> 3.0"
 
   name        = "${var.vpc_name}-rds-sg"
-  description = "Security group for RDS EC2 instance"
+  description = "Security group for RDS EC2 instance and security group"
   vpc_id      = module.vpc.vpc_id
   
   ingress_cidr_blocks  = ["10.0.0.0/24", "10.0.32.0/24"]
