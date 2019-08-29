@@ -80,17 +80,16 @@ module "security_group" {
   vpc_id      = module.vpc.vpc_id
   
   ingress_cidr_blocks  = ["10.0.0.0/24", "10.0.32.0/24"]
-  ingress {
-    from_port = 3306
-    to_port = 3306
-    protocol = "tcp"
-   }
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    self = true
+  ingress_rules            = ["https-443-tcp"]
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 3306
+      to_port     = 3306
+      protocol    = "tcp"
+      description = "MariaDB"
+      cidr_blocks = "0.0.0.0/0"
+    },
+  ]
   }
   tags {
     Name = "allow-mariadb"
