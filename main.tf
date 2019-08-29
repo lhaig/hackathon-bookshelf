@@ -92,9 +92,9 @@ module "security_group" {
   ]
 }
 
-# output "security_group" {
-#   value = module.security_group.this_security_group_id
-# }
+output "security_group" {
+  value = module.security_group.this_security_group_id
+}
 
 output "service_endpoint" {
   value = module.rds.this_db_instance_endpoint
