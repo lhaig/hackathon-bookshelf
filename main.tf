@@ -91,9 +91,6 @@ module "security_group" {
     },
   ]
   }
-  tags {
-    Name = "allow-mariadb"
-  }
 }
 
 # output "security_group" {
