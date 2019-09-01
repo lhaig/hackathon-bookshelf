@@ -27,6 +27,7 @@ module "vpc" {
   one_nat_gateway_per_az = var.vpc_one_nat_gateway_per_az
   public_subnets = ["10.0.101.0/24", "10.0.102.0/24"]
   single_nat_gateway = var.vpc_single_nat_gateway
+  enable_dns_hostnames = true
   tags  = {
       owner = var.owner
       env   = var.environment_tag
